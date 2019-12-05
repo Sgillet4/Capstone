@@ -20,6 +20,7 @@ def parameters(request):
     str_budget = request.POST.get('budget')
     departDate = request.POST.get('depart')
     returnDate = request.POST.get('return')
+    adults = request.POST.get('adulttravelers')
 
     url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/USD/en-US/"+ origin+ "/"+ destination+ "/"+departDate + "/"+returnDate
 
@@ -57,7 +58,7 @@ def parameters(request):
     #sort based on the price
     df = df.sort_values('Price', ascending=True)
     #result = df.values.tolist()
-        
+    df['Price'] = df['Price']*float(adults)
     #if empty string, print the result as is
     if not str_budget.strip():
         result = df.values.tolist()
